@@ -1,7 +1,7 @@
 #include "ets_sys.h"
 #include "gpio.h"
 
-#include "debug.h"
+#include "clockio.h"
 #include "delay.h"
 
 #define E  0
@@ -52,7 +52,7 @@ static void write_string(const char * s)
 
 void display_setup()
 {
-    DEBUG("Setting up display...\n");
+    clockio_printf("Setting up display...\n");
     write_instruction(0x28);
     delay_us(40);
     write_instruction(0x0C);
@@ -61,7 +61,7 @@ void display_setup()
 
 void display_clear()
 {
-    DEBUG("Clearing display...\n");
+    clockio_printf("Clearing display...\n");
     write_instruction(0x01);
     delay_us(1600);
 }

@@ -1,8 +1,8 @@
 #include "osapi.h"
 #include "user_interface.h"
 
+#include "clockio.h"
 #include "connection.h"
-#include "debug.h"
 
 typedef enum { CONNECTION_INITIALIZING, CONNECTION_SNTP, CONNECTION_READY } ConnectionState;
 
@@ -22,9 +22,9 @@ void connection_init()
 {
     switch (state) {
 	case CONNECTION_INITIALIZING:
-	    DEBUG("WiFi connecting...\n");
+	    clockio_printf("WiFi connecting...\n");
 	    if (wifi_station_get_connect_status() == STATION_GOT_IP) {
-		DEBUG("WiFi connected\n");
+		clockio_printf("WiFi connected\n");
 		sntp_setservername(0, "0.pool.ntp.org");
 		sntp_setservername(1, "1.pool.ntp.org");
 		sntp_setservername(2, "2.pool.ntp.org");
@@ -38,15 +38,15 @@ void connection_init()
 	    break;
 
 	case CONNECTION_SNTP:
-	    DEBUG("SNTP initializing...\n");
+	    clockio_printf("SNTP initializing...\n");
 	    if (sntp_get_current_timestamp() != 0) {
-		DEBUG("SNTP initialized\n");
+		clockio_printf("SNTP initialized\n");
 		state = CONNECTION_READY;
 	    }
 	    break;
 
 	case CONNECTION_READY:
-	    DEBUG("Connection ready\n");
+	    clockio_printf("Connection ready\n");
 	    break;
     }
 }
