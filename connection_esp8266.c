@@ -4,9 +4,7 @@
 #include "clockio.h"
 #include "connection.h"
 
-typedef enum { CONNECTION_INITIALIZING, CONNECTION_SNTP, CONNECTION_READY } ConnectionState;
-
-static volatile ConnectionState state = CONNECTION_INITIALIZING;
+static volatile enum ConnectionState { CONNECTION_INITIALIZING, CONNECTION_SNTP, CONNECTION_READY } state = CONNECTION_INITIALIZING;
 
 uint8_t connection_ready()
 {

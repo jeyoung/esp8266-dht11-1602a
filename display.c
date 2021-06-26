@@ -5,9 +5,7 @@
 #define MAX_LINES 2
 #define MAX_COLUMNS 16
 
-typedef enum { DISPLAY_INITIALIZING, DISPLAY_READY, DISPLAY_DATA_AVAILABLE, DISPLAY_WRITING } DisplayState;
-
-static volatile DisplayState state = DISPLAY_INITIALIZING;
+static volatile enum DisplayState { DISPLAY_INITIALIZING, DISPLAY_READY, DISPLAY_DATA_AVAILABLE, DISPLAY_WRITING } state = DISPLAY_INITIALIZING;
 
 static char lines[MAX_LINES][MAX_COLUMNS+1];
 static volatile uint32_t line_counter = 0;

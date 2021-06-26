@@ -15,7 +15,7 @@ BIN_PREFIX = $(EXE)-
 BIN0 = $(BIN_PREFIX)0x00000.bin
 BIN1 = $(BIN_PREFIX)0x10000.bin
 
-SOURCES = main.c clock.c clockio_esp8266.c connection_esp8266.c delay_esp8266.c display.c display_esp8266.c #sensor_bmp180.c i2c.c
+SOURCES = main.c clock.c clockio_esp8266.c connection_esp8266.c delay_esp8266.c display.c display_esp8266.c temperature_sensor.c temperature_sensor_esp8266.c
 OBJECTS = $(SOURCES:%.c=%.o)
 
 BAUD = 960000
