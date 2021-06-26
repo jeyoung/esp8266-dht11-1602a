@@ -1,6 +1,6 @@
 # Introduction
 
-This project is for measure the temperature and humidity with a DHT11 sensor and to display the readings on an LCD 1602A display.
+This project is for measuring the temperature and humidity with a DHT11 sensor and to display the readings on an LCD 1602A display.
 
 # Parts required
 
