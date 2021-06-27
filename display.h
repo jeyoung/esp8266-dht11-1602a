@@ -7,6 +7,8 @@ uint8_t display_ready();
 
 void display_init();
 
+void display_power(uint8_t onoff);
+
 void display_add(const char * s);
 
 void display_refresh();

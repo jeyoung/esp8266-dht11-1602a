@@ -10,6 +10,7 @@
 #define GPIO_D5 14
 #define GPIO_D6 12
 #define GPIO_D7 13
+#define GPIO_POWER 4
 
 static void write_byte(char byte)
 {
@@ -48,6 +49,11 @@ static void write_string(const char * s)
 	write_data(*s++);
 	delay_us(40);
     }
+}
+
+void display_power(uint8_t onoff)
+{
+    GPIO_OUTPUT_SET(GPIO_POWER, onoff);
 }
 
 void display_setup()

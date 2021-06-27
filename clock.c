@@ -9,7 +9,8 @@
 #include "display.h"
 #include "temperature_sensor.h"
 
-#define TEMPERATURE_INTERVAL_US 300000000
+#define TEMPERATURE_INTERVAL_US 10000000
+#define SLEEP_DURATION_US 3600000000
 
 #define UPTIME (*(volatile uint32_t *)0x3ff20c00)
 #define ROLLING_TIMESTAMP {rolling_timestamp = UPTIME;}
@@ -29,6 +30,8 @@ void clock_heartbeat()
     struct TemperatureSensorReadings tsr;
     int32_t t;
     int32_t h;
+
+    uint64_t sleep = SLEEP_DURATION_US;
 
     switch (state)
     {
@@ -69,9 +72,11 @@ void clock_heartbeat()
 	    display_refresh();
 
 	    if (ELAPSED > TEMPERATURE_INTERVAL_US) {
-		state = CLOCK_SENSING;
+		ROLLING_TIMESTAMP
+		display_power(0);
+		state = CLOCK_INITIALIZING;
+		system_deep_sleep(sleep);
 	    }
-
 	    break;
 
 	case CLOCK_SENSING:

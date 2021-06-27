@@ -11,6 +11,7 @@ static char lines[MAX_LINES][MAX_COLUMNS+1];
 static volatile uint32_t line_counter = 0;
 static volatile uint32_t line_index = 0;
 
+void display_power(uint8_t onoff);
 void display_setup();
 void display_clear();
 void display_write(uint8_t row, const char * s);
@@ -24,6 +25,7 @@ void display_init()
 {
     switch (state) {
 	case DISPLAY_INITIALIZING:
+	    display_power(1);
 	    display_setup();
 	    display_clear();
 	    state = DISPLAY_READY;
