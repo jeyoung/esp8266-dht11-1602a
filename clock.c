@@ -10,13 +10,14 @@
 #include "temperature_sensor.h"
 
 #define TEMPERATURE_INTERVAL_US 10000000
+#define INITIALIZATION_TIMEOUT 10000000
 #define SLEEP_DURATION_US 3600000000
 
 #define UPTIME (*(volatile uint32_t *)0x3ff20c00)
 #define ROLLING_TIMESTAMP {rolling_timestamp = UPTIME;}
 #define ELAPSED (UPTIME - rolling_timestamp)
 
-static volatile enum ClockState { CLOCK_INITIALIZING, CLOCK_READY, CLOCK_SENSING } state = CLOCK_INITIALIZING;
+static volatile enum ClockState { CLOCK_INITIALIZING, CLOCK_READY, CLOCK_SLEEP, CLOCK_SENSING } state = CLOCK_INITIALIZING;
 
 static volatile uint32_t rolling_timestamp = 0;
 
@@ -37,7 +38,9 @@ void clock_heartbeat()
     {
 	case CLOCK_INITIALIZING:
 	    clockio_printf("Clock initializing...\n");
-	    if (connection_ready() && display_ready() && temperature_sensor_ready()) {
+	    if (ELAPSED > INITIALIZATION_TIMEOUT) {
+		state = CLOCK_SLEEP;
+	    } else if (connection_ready() && display_ready() && temperature_sensor_ready()) {
 		clockio_printf("Clock initialized in %d us\n", ELAPSED);
 		state = CLOCK_SENSING;
 	    } else {
@@ -45,6 +48,13 @@ void clock_heartbeat()
 		display_init();
 		temperature_sensor_init();
 	    }
+	    break;
+
+	case CLOCK_SLEEP:
+	    ROLLING_TIMESTAMP
+	    display_power(0);
+	    state = CLOCK_INITIALIZING;
+	    system_deep_sleep(sleep);
 	    break;
 
 	case CLOCK_READY:
@@ -72,10 +82,7 @@ void clock_heartbeat()
 	    display_refresh();
 
 	    if (ELAPSED > TEMPERATURE_INTERVAL_US) {
-		ROLLING_TIMESTAMP
-		display_power(0);
-		state = CLOCK_INITIALIZING;
-		system_deep_sleep(sleep);
+		state = CLOCK_SLEEP;
 	    }
 	    break;
 
