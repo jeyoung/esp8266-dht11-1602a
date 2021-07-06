@@ -6,10 +6,12 @@
 #include "clockio.h"
 #include "delay.h"
 
-#define TEMPERATURE_SENSOR_WAKEUP_TIME_US 3000000
+#define TEMPERATURE_SENSOR_WAKEUP_TIME_US 2000000
 #define READ_COUNT_MAX 3
 
 #define GPIO_WIRE 5
+
+#define DHT22
 
 static volatile enum WireState { WIRE_INITIALIZING, WIRE_READY, WIRE_STARTED, WIRE_WAITING, WIRE_RESPONDED, WIRE_NO_RESPONSE, WIRE_DATA_PREPARATION, WIRE_DATA_STARTING, WIRE_DATA_ZERO, WIRE_DATA_ONE, WIRE_DATA_RECEIVED, WIRE_DONE } state = WIRE_INITIALIZING;
 
@@ -52,7 +54,7 @@ start_read:
 		break;
 
 	    case WIRE_STARTED:
-		if (elapsed >= 18000) {
+		if (elapsed >= 2000) {
 		    state_timestamp = system_get_time();
 		    GPIO_OUTPUT_SET(GPIO_WIRE, 1);
 		    GPIO_DIS_OUTPUT(GPIO_WIRE);
@@ -173,12 +175,25 @@ start_read:
 
 float temperature_sensor_temperature()
 {
+#if DHT11
     return t_integral + (t_decimal / 1000);
+#else
+    float ret;
+    ret = ((uint16_t)(t_integral << 8) + (uint16_t)t_decimal) / 10;
+    if (t_integral >> 7) {
+	ret *= -1;
+    }
+    return ret;
+#endif
 }
 
 float temperature_sensor_humidity()
 {
+#if DHT11
     return rh_integral + (rh_decimal / 1000);
+#else
+    return ((uint16_t)(rh_integral << 8) + (uint16_t)rh_decimal) / 10;
+#endif
 }
 
 void temperature_sensor_start()
