@@ -6,7 +6,7 @@ This project is for measuring the temperature and humidity with a DHT11 sensor a
 
 * ESP8266 (aka NodeMCU)
 * 1602A LCD display
-* DHT11 temperature/humidity sensor
+* DHT22 temperature/humidity sensor
 
 # Pins
 
