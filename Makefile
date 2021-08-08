@@ -1,7 +1,7 @@
-SDK_HOME = /home/pi/source/github/esp-open-sdk/sdk
+SDK_HOME = /home/jeyoung/source/github/esp-open-sdk/sdk
 CC = $(SDK_HOME)/../xtensa-lx106-elf/bin/xtensa-lx106-elf-gcc
 LD = $(CC)
-ESPTOOL = esptool.py
+ESPTOOL = esptool
 
 LDLIBS = -nostdlib -Wl,--start-group -lmain -lnet80211 -lwpa -llwip -lpp -lphy -lc -ldriver -lmbedtls -lssl -lcrypto -Wl,--end-group -lgcc
 

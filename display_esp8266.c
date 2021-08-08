@@ -1,6 +1,5 @@
 #include "ets_sys.h"
 #include "gpio.h"
-
 #include "clockio.h"
 #include "delay.h"
 
@@ -43,7 +42,7 @@ static void write_data(uint8_t byte)
     write_byte(byte);
 }
 
-static void write_string(const char * s)
+static void write_string(const char *s)
 {
     while (*s) {
 	write_data(*s++);
@@ -72,11 +71,11 @@ void display_clear()
     delay_us(1600);
 }
 
-void display_write(uint8_t row, const char * s)
+void display_write(uint8_t row, const char *s)
 {
     uint8_t locations[2] = { 0x00, 0x40 };
+
     write_instruction(0x80 | locations[row]);
     delay_us(40);
-
     write_string(s);
 }

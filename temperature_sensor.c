@@ -15,14 +15,13 @@ float temperature_sensor_humidity();
 void temperature_sensor_init()
 {
     switch (state) {
-	case TEMPERATURE_SENSOR_INTIALIZING:
-	case TEMPERATURE_SENSOR_ERROR:
-	    temperature_sensor_start();
-	    state = TEMPERATURE_SENSOR_READY;
-	    break;
-
-	case TEMPERATURE_SENSOR_READY:
-	    break;
+    case TEMPERATURE_SENSOR_INTIALIZING:
+    case TEMPERATURE_SENSOR_ERROR:
+	temperature_sensor_start();
+	state = TEMPERATURE_SENSOR_READY;
+	break;
+    case TEMPERATURE_SENSOR_READY:
+	break;
     }
 }
 
@@ -42,9 +41,8 @@ void temperature_sensor_measure()
 	if (temperature_sensor_read()) {
 	    readings.temperature = temperature_sensor_temperature();
 	    readings.humidity = temperature_sensor_humidity();
-	} else {
+	} else
 	    state = TEMPERATURE_SENSOR_ERROR;
-	}
     }
 }
 

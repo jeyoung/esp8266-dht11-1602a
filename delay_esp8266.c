@@ -1,5 +1,4 @@
 #include "osapi.h"
-
 #include "ets_sys.h"
 #include "delay.h"
 
@@ -18,12 +17,10 @@ void delay_us(uint32_t us)
 
     wholes = us / MAX_DELAY;
     remainder = us % MAX_DELAY;
-
     for (counter = 0; counter < wholes; ++counter) {
 	os_delay_us(MAX_DELAY);
 	system_soft_wdt_feed();
     }
-
     os_delay_us(remainder);
 }
 
