@@ -6,7 +6,7 @@
 #include "clock.h"
 #include "delay.h"
 
-#define OS_TIMER_INTERVAL 250
+#define OS_TIMER_INTERVAL 500
 
 static os_timer_t os_timer;
 
