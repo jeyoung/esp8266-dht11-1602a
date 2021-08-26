@@ -3,6 +3,8 @@
 
 void connection_init();
 
+uint8_t connection_paired();
+
 uint8_t connection_ready();
 
 uint32_t connection_sntp_get_timestamp();

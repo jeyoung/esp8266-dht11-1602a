@@ -3,10 +3,10 @@ CC = $(SDK_HOME)/../xtensa-lx106-elf/bin/xtensa-lx106-elf-gcc
 LD = $(CC)
 ESPTOOL = esptool
 
-LDLIBS = -nostdlib -Wl,--start-group -lmain -lnet80211 -lwpa -llwip -lpp -lphy -lc -ldriver -lmbedtls -lssl -lcrypto -Wl,--end-group -lgcc
+LDLIBS = -nostdlib -Wl,--start-group -lmain -lnet80211 -lwps -lwpa -llwip -lpp -lphy -lc -ldriver -lmbedtls -lssl -lcrypto -Wl,--end-group -lgcc
 
 CPPFLAGS = 
-CFLAGS = -I. -mlongcalls -I$(SDK_HOME)/include -I$(SDK_HOME)/driver_lib/driver -I$(SDK_HOME)/driver_lib/include/driver
+CFLAGS = -Os -I. -mlongcalls -I$(SDK_HOME)/include -I$(SDK_HOME)/driver_lib/driver -I$(SDK_HOME)/driver_lib/include/driver
 LDFLAGS = -T$(SDK_HOME)/ld/eagle.app.v6.ld -L$(SDK_HOME)/lib
 
 EXE = main
@@ -15,7 +15,7 @@ BIN_PREFIX = $(EXE)-
 BIN0 = $(BIN_PREFIX)0x00000.bin
 BIN1 = $(BIN_PREFIX)0x10000.bin
 
-SOURCES = main.c clock.c clockio_esp8266.c connection_esp8266.c delay_esp8266.c display.c display_esp8266.c temperature_sensor.c temperature_sensor_esp8266.c
+SOURCES = main.c button_esp8266.c clock.c clockio_esp8266.c connection_esp8266.c delay_esp8266.c display.c display_esp8266.c temperature_sensor.c temperature_sensor_esp8266.c
 OBJECTS = $(SOURCES:%.c=%.o)
 
 BAUD = 921600

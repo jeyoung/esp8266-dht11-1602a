@@ -26,15 +26,9 @@ uint8_t temperature_sensor_read()
     uint8_t checksum = 0;
     uint8_t bit_count = 0;
 
-#if 0
-    clockio_printf("Temperature sensor reading...\n");
-#endif
     state = WIRE_INITIALIZING;
     state_timestamp = system_get_time();
 start_read:
-#if 0
-    clockio_printf("Read count #%d\n", read_count+1);
-#endif
     while (state != WIRE_DONE && state != WIRE_NO_RESPONSE) {
 	previous_state = state;
 	switch (state) {
@@ -128,9 +122,6 @@ start_read:
 	}
 	elapsed = system_get_time() - state_timestamp;
     }
-#if 0
-    clockio_printf("Data counter: %d, Elapsed: %u, Previous state: %u, State: %u\n", bit_count, elapsed, previous_state, state);
-#endif
     rh_integral = (data & 0xFF000000) >> 24;
     rh_decimal = (data & 0x00FF0000) >> 16;
     t_integral = (data & 0x0000FF00) >> 8;
