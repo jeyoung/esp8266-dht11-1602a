@@ -1,4 +1,5 @@
 #include "osapi.h"
+#include "sntp.h"
 #include "user_interface.h"
 #include "clockio.h"
 #include "connection.h"
@@ -74,6 +75,7 @@ void ICACHE_FLASH_ATTR connection_init()
 	}
 	break;
     case CONNECTION_READY:
+    default:
 	break;
     }
 }

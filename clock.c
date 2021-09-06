@@ -1,5 +1,6 @@
 #include <stdint.h>
 #include "ets_sys.h"
+#include "user_interface.h"
 #include "time.h"
 #include "clock.h"
 #include "clockio.h"

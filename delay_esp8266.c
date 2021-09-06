@@ -1,8 +1,11 @@
-#include "osapi.h"
 #include "ets_sys.h"
+#include "osapi.h"
+#include "user_interface.h"
 #include "delay.h"
 
 #define MAX_DELAY 65535
+
+extern void * ets_vsprintf(void *, void *, void *);
 
 void delay_us(uint32_t us)
 {

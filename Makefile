@@ -1,12 +1,12 @@
-SDK_HOME = /home/jeyoung/source/github/esp-open-sdk/sdk
+SDK_HOME = /home/pi/source/github/esp-open-sdk/sdk
 CC = $(SDK_HOME)/../xtensa-lx106-elf/bin/xtensa-lx106-elf-gcc
 LD = $(CC)
 ESPTOOL = esptool
 
-LDLIBS = -nostdlib -Wl,--start-group -lmain -lnet80211 -lwps -lwpa -llwip -lpp -lphy -lc -ldriver -lmbedtls -lssl -lcrypto -Wl,--end-group -lgcc
+LDLIBS = -nostdlib -Wl,--start-group -lmain -lnet80211 -lwpa -llwip -lpp -lphy -lc -ldriver -lmbedtls -lssl -lcrypto -lwps -Wl,--end-group -lgcc
 
 CPPFLAGS = 
-CFLAGS = -Os -I. -mlongcalls -I$(SDK_HOME)/include -I$(SDK_HOME)/driver_lib/driver -I$(SDK_HOME)/driver_lib/include/driver
+CFLAGS = -Os -Wall -I. -mlongcalls -I$(SDK_HOME)/include -I$(SDK_HOME)/driver_lib/driver -I$(SDK_HOME)/driver_lib/include/driver
 LDFLAGS = -T$(SDK_HOME)/ld/eagle.app.v6.ld -L$(SDK_HOME)/lib
 
 EXE = main

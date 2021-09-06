@@ -1,6 +1,7 @@
 #include "temperature_sensor.h"
 #include "ets_sys.h"
 #include "gpio.h"
+#include "user_interface.h"
 #include "clockio.h"
 #include "delay.h"
 
@@ -18,10 +19,9 @@ static uint8_t t_decimal;
 
 uint8_t temperature_sensor_read()
 {
-    enum WireState previous_state;
     uint32_t state_timestamp;
     uint8_t read_count = 0;
-    uint32_t elapsed;
+    uint32_t elapsed = 0;
     uint32_t data = 0;
     uint8_t checksum = 0;
     uint8_t bit_count = 0;
@@ -30,7 +30,6 @@ uint8_t temperature_sensor_read()
     state_timestamp = system_get_time();
 start_read:
     while (state != WIRE_DONE && state != WIRE_NO_RESPONSE) {
-	previous_state = state;
 	switch (state) {
 	case WIRE_INITIALIZING:
 	    state_timestamp = system_get_time();
@@ -118,6 +117,8 @@ start_read:
 		state = WIRE_DONE;
 	    } else if (elapsed > 55)
 		state = WIRE_NO_RESPONSE;
+	    break;
+	default:
 	    break;
 	}
 	elapsed = system_get_time() - state_timestamp;

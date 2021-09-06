@@ -36,6 +36,8 @@ void display_init()
 	line_index = 0;
 	line_counter = 0;
 	break;
+    default:
+	break;
     }
 }
 
@@ -64,6 +66,7 @@ void display_refresh()
 	state = DISPLAY_READY;
 	break;
     case DISPLAY_READY:
+    default:
 	break;
     }
 }

@@ -2,6 +2,8 @@
 #include "osapi.h"
 #include "clockio.h"
 
+extern int ets_vsprintf(const char *, ...);
+
 int clockio_printf(const char *fmt, ...)
 {
     int ret;
