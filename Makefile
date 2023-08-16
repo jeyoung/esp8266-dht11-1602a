@@ -1,13 +1,13 @@
-SDK_HOME = /home/pi/source/github/esp-open-sdk/sdk
-CC = $(SDK_HOME)/../xtensa-lx106-elf/bin/xtensa-lx106-elf-gcc
-LD = $(CC)
+SDK_HOME = /home/jeyoung/source/github/ESP8266_NONOS_SDK
+CC = /usr/bin/xtensa-lx106-elf-gcc
+LD = /usr/bin/xtensa-lx106-elf-ld
 ESPTOOL = esptool
 
-LDLIBS = -nostdlib -Wl,--start-group -lmain -lnet80211 -lwpa -llwip -lpp -lphy -lc -ldriver -lmbedtls -lssl -lcrypto -lwps -Wl,--end-group -lgcc
+LDLIBS = -nostdlib -static --start-group -lmain -lnet80211 -lwpa -llwip -lpp -lphy -lc -lgcc -ldriver -lmbedtls -lssl -lcrypto -lwps --end-group -lgcc
 
 CPPFLAGS = 
-CFLAGS = -Os -Wall -I. -mlongcalls -I$(SDK_HOME)/include -I$(SDK_HOME)/driver_lib/driver -I$(SDK_HOME)/driver_lib/include/driver
-LDFLAGS = -T$(SDK_HOME)/ld/eagle.app.v6.ld -L$(SDK_HOME)/lib
+CFLAGS = -Os -Wall -I. -mlongcalls -I$(SDK_HOME)/include -I$(SDK_HOME)/third_part/include -I$(SDK_HOME)/driver_lib/driver -I$(SDK_HOME)/driver_lib/include/driver
+LDFLAGS = -L$(SDK_HOME)/lib -T$(SDK_HOME)/ld/eagle.app.v6.ld --sysroot=$(SDK_HOME)/ld $(LDLIBS)
 
 EXE = main
 ELF = $(EXE).elf
@@ -33,4 +33,4 @@ flash: $(BIN0)
 	$(ESPTOOL) -b $(BAUD) write_flash 0 $(BIN0) 0x10000 $(BIN1)
 
 .PHONY clean: $(SOURCES)
-	-rm *.o $(ELF) $(BIN0) $(BIN1)
+	@rm *.o $(ELF) $(BIN0) $(BIN1)
